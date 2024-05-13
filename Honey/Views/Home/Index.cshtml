@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "صفحه اصلی";
+}
+
+<section class="hero-section">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
+				<div class="user-data">
+
+					@if (User.Identity.IsAuthenticated)
+					{
+						<h1>@User.Identity.Name</h1>
+					}
+					else
+					{
+						<h1>ثبت نام کنید</h1>
+					}
+					
+					<p>کارآموز net. و توسعه نرم افزار</p>
+					<a href="javascript:void(0)" class="lightbox-toggle magic-hover magic-hover__square button button--moema button--text-thick button--text-upper button--size-s">Start Consulting</a>
+
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="300" data-aos-duration="500">
+				<div class="hero-section-img">
+                    <img alt="hero-girl-img" src="template/img/this.jpg" />
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<br /><br /><br /><br />
+</section>

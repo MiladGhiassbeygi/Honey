@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "ثبت نام کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="from-you gap no-top">
+    <div class="container">
+        <div class="hading" data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
+            <h2>ثبت نام کاربر</h2>
+        </div>
+        <div class="row align-items-center">
+
+            <div class="col-lg-8 col-md-12 col-sm-12" data-aos="fade-up" data-aos-delay="300" data-aos-duration="400">
+                <div class="your-name">
+                    <form class="one">
+                        <input type="text" id="Name" placeholder="   نام و نام خانوادگی">
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <input type="text" id="Age" placeholder="   سن">
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <input type="text" id="City" placeholder="   شهر">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <input type="text" id="Job" placeholder="   عنوان شغلی">
+
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <input type="text" id="Mobile" placeholder="   شماره تلفن">
+                            </div>
+                        </div>
+
+
+                        <input type="file" id="Image" placeholder="  تصویر" accept="image/*" style=" height: 66px; width: 100%; padding-left: 25px; outline: 0;margin:auto; border-radius: 50px;  color: #555; border: 1px solid #dedede;">
+
+                        <textarea type="text" id="Description" placeholder="   درباره ی من" style=" padding-left: 25px; outline: 0;margin-right: 40px; border-radius: 50px; margin-bottom: 20px; color: #555; border: 1px solid #dedede;"></textarea>
+
+                        <input type="text" id="Email" placeholder="   ایمیل" style=" height: 66px; width: 100%; padding-left: 25px; outline: 0;margin-right: 40px; border-radius: 50px; margin-bottom: 20px; color: #555; border: 1px solid #dedede;">
+
+                        <input type="password" id="Password" placeholder="   رمز عبور " style=" height: 66px; width: 100%; padding-left: 25px; outline: 0;margin-right: 40px; border-radius: 50px; margin-bottom: 20px; color: #555; border: 1px solid #dedede;">
+
+
+
+
+                        <br /><br /><br />
+                        <a onclick="Register()" class=" magic-hover__square button button--moema button--text-thick button--text-upper ">ثبت نام</a>
+                        <br />
+                        <br />
+                        <br />
+                        <a href="~/Register/Login">ثبت نام کرده اید؟</a>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts
+{
+    <link href="~/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/sweetalert2/sweetalert2.min.js"></script>
+
+
+    <script>
+        function Register() {
+
+           
+            var formData = new FormData();
+
+            //دریافت مقادیر از تکس باکس ها و....
+            formData.append("Name", $("#Name").val());
+            formData.append("Age", $("#Age").val());
+            formData.append("City", $("#City").val());
+            formData.append("Job", $("#Job").val());
+            formData.append("Mobile", $("#Mobile").val());
+            formData.append("Email", $("#Email").val());
+            formData.append("Password", $("#Password").val());
+            formData.append("Description", $("#Description").val());
+
+            var Image = document.getElementById("Image");
+
+            if (Image.files.length > 0) {
+                // Append the first file with the key 'file'
+                formData.append('file', Image.files[0]);
+                // If you need to handle multiple files, you might need to adjust your backend to accept a list of files
+            }
+
+            $.ajax({
+                url: "Register",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'موفق!',
+                            data.message,
+                            'success'
+                        ).then(function (isconfirm) {
+                            window.location.replace("/");
+                        });
+                    }
+                    else {
+
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+                    }
+                },
+                error: function (request, status, error) {
+                    swal.fire(
+                        'هشدار!',
+                        request.responseText,
+                        'warning'
+                    );
+                }
+            });
+        }
+
+
+
+    </script>
+}
+</html>
